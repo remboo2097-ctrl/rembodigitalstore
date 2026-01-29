@@ -1,0 +1,1463 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Daftar Produk Digital</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      padding: 20px;
+    }
+
+    .store-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.store-header h1 {
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin: 0;
+}
+
+.store-header h1 span {
+  background: linear-gradient(135deg,#ffd700,#ff9800);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.store-header p {
+  margin-top: 8px;
+  font-size: 13px;
+  opacity: 0.85;
+  letter-spacing: 1px;
+}
+
+
+    h1 {
+      text-align: center;
+      margin-bottom: 1px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .faq {
+      max-width: 700px;
+      margin: auto;
+    }
+
+    details {
+      background: #111;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      padding: 15px;
+    }
+
+    summary {
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .product-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #333;
+      font-size: 14px;
+    }
+
+    .price {
+      color: #ffd700;
+      font-weight: bold;
+    }
+
+    .order-btn {
+      background: #25D366;
+      color: #000;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .game-btn {
+      display: inline-block;
+      margin: 6px 4px;
+      padding: 8px 14px;
+      background: #203a43;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .game-btn:hover {
+      background: #2c5364;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      margin: 6px 0;
+      border-radius: 6px;
+      border: none;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+details > *:not(summary) {
+  animation: fadeSlide .25s ease;
+}
+
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.live-order {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background: #111;
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  box-shadow: 0 5px 20px rgba(0,0,0,.4);
+  z-index: 9999;
+  animation: fadein 0.4s;
+}
+
+
+@keyframes fadein {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+/* ===== FLOATING ACTION BUTTON (CLEAN VERSION) ===== */
+
+.fab-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+}
+
+/* tombol utama */
+.fab-main {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #25D366, #128C7E);
+  color: #fff;
+  font-size: 26px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(0,0,0,.35);
+  transition: all .3s ease;
+}
+
+.fab-main:hover {
+  transform: scale(1.08);
+}
+
+/* item menu */
+.fab-item {
+  position: absolute;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  border: none;
+  cursor: pointer;
+  opacity: 0;
+  transform: scale(0.5);
+  pointer-events: none;
+  transition: all .3s ease;
+  box-shadow: 0 8px 20px rgba(0,0,0,.3);
+}
+
+/* WhatsApp */
+.fab-wa {
+  background: #25D366;
+  color: #fff;
+  bottom: 70px;
+  right: 7px;
+}
+
+.fab-ig {
+  background: #25D366;
+  color: #fff;
+  bottom: 50px;
+  right: 50px;
+}
+
+/* Help */
+.fab-help {
+  background: #1e88e5;
+  color: #fff;
+  bottom: 7px;
+  right: 70px;
+}
+
+/* aktif */
+.fab-container.active .fab-item {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+/* rotate + jadi X */
+.fab-container.active .fab-main {
+  transform: rotate(45deg);
+  background: linear-gradient(135deg, #ff5252, #ff1744);
+}
+/* ===== HELP / PENGERTIAN POPUP ===== */
+
+.help-box {
+  position: fixed;
+  right: 24px;
+  bottom: 100px; /* NAIK dari tombol */
+  width: 320px;
+  max-height: 70vh;
+  background: rgba(20, 20, 20, 0.95);
+  backdrop-filter: blur(12px);
+  color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 15px 40px rgba(0,0,0,.6);
+  z-index: 10000;
+  overflow: hidden;
+  animation: helpFade .35s ease;
+}
+
+/* header */
+.help-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  background: linear-gradient(135deg, #1e88e5, #1565c0);
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.help-header button {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* isi */
+.help-content {
+  padding: 16px;
+  font-size: 13px;
+  line-height: 1.6;
+  overflow-y: auto;
+  max-height: 65vh;
+  scrollbar-width: thin;
+}
+
+
+.help-content b {
+  color: #ffd700;
+}
+
+/* animasi */
+@keyframes helpFade {
+  from {
+    opacity: 0;
+    transform: translateY(15px) scale(.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* hidden tetap */
+.hidden {
+  display: none;
+}
+
+.rules ul {
+  padding-left: 18px;
+  font-size: 13px;
+}
+.rules li {
+  margin-bottom: 6px;
+}
+
+  </style>
+</head>
+
+<body>
+<div id="live-order" class="live-order hidden"></div>
+<section id="faq" class="faq">
+<!-- HEADER -->
+<div class="store-header">
+  <h1>REMBO<span>STORE</span></h1>
+  <p>Digital Store • Fast • Trusted</p>
+</div>
+
+  <!-- ALIGHT MOTION -->
+  <details>
+    <summary>🎨 Alight Motion Pro</summary>
+    <div class="product-item">
+      <span>1 Tahun Private akun buyer</span>
+      <span class="price">Rp3.000</span>
+      <button class="order-btn"
+        onclick="orderWA('Alight Motion Pro','1 Thn prvt buy','Rp3.000')">Order</button>
+    </div>
+    <div class="product-item">
+      <span>1 Bulan Private akun seller</span>
+      <span class="price">Rp10.000</span>
+      <button class="order-btn"
+        onclick="orderWA('Alight Motion Pro','1 Bln Prvt sel','Rp10.000')">Order</button>
+    </div>
+    <div class="product-item">
+      <span>1 Bulan Private email generator</span>
+      <span class="price">Rp8.500</span>
+      <button class="order-btn"
+        onclick="orderWA('Alight Motion Pro','1 Bulan prvt gene','Rp8.500')">Order</button>
+    </div>
+  </details>
+
+  <!-- CANVA -->
+  <details>
+    <summary>🎨 Canva Pro</summary>
+    <div class="product-item">
+      <span>1 Bulan</span>
+      <span class="price">Rp5.000</span>
+      <button class="order-btn"
+        onclick="orderWA('Canva Pro','1 Bulan','Rp5.000')">Order</button>
+    </div>
+    <div class="product-item">
+      <span>3 Bulan</span>
+      <span class="price">Rp10.000</span>
+      <button class="order-btn"
+        onclick="orderWA('Canva Pro','3 Bulan','Rp10.000')">Order</button>
+    </div>
+    <div class="product-item">
+      <span>1 Tahun (sistem renew)</span>
+      <span class="price">Rp23.000</span>
+      <button class="order-btn"
+        onclick="orderWA('Canva Pro','1 Tahun','Rp23.000')">Order</button>
+    </div>
+    <div class="product-item">
+      <span>1 Bulan Head invt 10 member</span>
+      <span class="price">Rp14.000</span>
+      <button class="order-btn"
+        onclick="orderWA('Canva Pro','1 bln head','Rp14.000')">Order</button>
+    </div>
+  </details>
+
+  <!-- CAPCUT -->
+  <details>
+    <summary>🎨 Capcut Pro</summary>
+    <div class="product-item">
+      <span>7 Hari</span>
+      <span class="price">Rp7.500</span>
+      <button class="order-btn"
+        onclick="orderWA('Capcut Pro','7 Hari','Rp7.500')">Order</button>
+    </div>
+    <div class="product-item">
+      <span>14 Hari</span>
+      <span class="price">Rp11.000</span>
+      <button class="order-btn"
+        onclick="orderWA('Capcut Pro','14 Hari','Rp11.000')">Order</button>
+    </div>
+    <div class="product-item">
+      <span>1 Bulan</span>
+      <span class="price">Rp17.000</span>
+      <button class="order-btn"
+        onclick="orderWA('Capcut Pro','1 Bulan','Rp17.000')">Order</button>
+    </div>
+  </details>
+
+  <!-- SPOTIFY -->
+  <details>
+    <summary>🎧 Spotify Premium</summary>
+    <div class="product-item">
+      <span>Famplan 1 Bulan</span>
+      <span class="price">Rp20.000</span>
+      <button class="order-btn"
+        onclick="orderWA('Spotify Premium','1 Bulan Famp','Rp20.000')">Order</button>
+    </div>
+    <div class="product-item">
+      <span>Famplan 2 Bulan</span>
+      <span class="price">Rp34.000</span>
+      <button class="order-btn"
+        onclick="orderWA('Spotify Premium','2 Bulan Famp','Rp34.000')">Order</button>
+    </div>
+    <div class="product-item">
+      <span>Indplan 1 Bulan</span>
+      <span class="price">Rp22.000</span>
+      <button class="order-btn"
+        onclick="orderWA('Spotify Premium','1 Bulan Ind','Rp22.000')">Order</button>
+    </div>
+  </details>
+
+  <!-- NETFLIX -->
+  <details>
+    <summary>🎬 Netflix Premium</summary>
+    <div class="product-item">
+      <span>7 Hari 2U</span>
+      <span class="price">Rp16.000</span>
+      <button class="order-btn"
+        onclick="orderWA('Netflix Premium','7 Hari 2U','Rp16.000')">Order</button>
+    </div>
+        <div class="product-item">
+      <span>7 Hari 1U</span>
+      <span class="price">Rp18.000</span>
+      <button class="order-btn"
+        onclick="orderWA('Netflix Premium','7 Hari 1U','Rp18.000')">Order</button>
+    </div>
+    <div class="product-item">
+      <span>1 Bulan 1U</span>
+      <span class="price">Rp29.500</span>
+      <button class="order-btn"
+        onclick="orderWA('Netflix Premium','1 Bulan 1U','Rp29.500')">Order</button>
+    </div>
+    <div class="product-item">
+      <span>1 Bulan 2U</span>
+      <span class="price">Rp24.000</span>
+      <button class="order-btn"
+        onclick="orderWA('Netflix Premium','1 Bulan 2U','Rp24.000')">Order</button>
+    </div>
+    <div class="product-item">
+      <span>Semi Private</span>
+      <span class="price">Rp36.000</span>
+      <button class="order-btn"
+        onclick="orderWA('Netflix Premium','Semi Private','Rp36.000')">Order</button>
+    </div>
+    <div class="product-item">
+      <span>Private 1 Bulan</span>
+      <span class="price">Rp175.000</span>
+      <button class="order-btn"
+        onclick="comingSoon('Netflix Premium','Private 1 Bulan','Rp175.000')">Soon</button>
+    </div>
+  </details>
+
+  <!-- VIDIO -->
+  <details>
+    <summary>🎬 Vidio Premium</summary>
+    <div class="product-item">
+      <span>Sharing 1 Bulan Platinum</span>
+      <span class="price">Rp23.000</span>
+      <button class="order-btn"
+        onclick="orderWA('Vidio Premium','Sharing 1 Bulan Platinum','Rp23.000')">Order</button>
+    </div>
+    <div class="product-item">
+      <span>Sharing 1 Bulan Mobile</span>
+      <span class="price">Rp19.000</span>
+      <button class="order-btn"
+        onclick="orderWA('Vidio Premium','Sharing 1 Bulan Mobile','Rp19.000')">Order</button>
+    </div>
+    <div class="product-item">
+      <span>Private 1 Bulan Mobile</span>
+      <span class="price">Rp30.000</span>
+      <button class="order-btn"
+        onclick="orderWA('Vidio Premium','Private 1 Bulan Mobile','Rp30.000')">Order</button>
+    </div>
+    <div class="product-item">
+      <span>Private 1 Bulan Platinum</span>
+      <span class="price">Rp39.000</span>
+      <button class="order-btn"
+        onclick="orderWA('Vidio Premium','Private 1 Bulan Platinum','Rp39.000')">Order</button>
+    </div>
+    <div class="product-item">
+      <span>Private Only Tv</span>
+      <span class="price">Rp13.000</span>
+      <button class="order-btn"
+        onclick="orderWA('Vidio Premium','Private Only Tv','Rp13.000')">Order</button>
+    </div>
+  </details>
+
+  <!-- YouTube -->
+  <details>
+    <summary>🎬 YouTube Premium</summary>
+    <div class="product-item">
+      <span>Famplan 1 Bulan</span>
+      <span class="price">Rp5.000</span>
+      <button class="order-btn"
+        onclick="orderWA('YouTube Premium','Famplan 1 Bulan','Rp5.000')">Order</button>
+    </div>
+    <div class="product-item">
+      <span>Indplan 1 Bulan</span>
+      <span class="price">Rp13.000</span>
+      <button class="order-btn"
+        onclick="orderWA('YouTube Premium','Indplan 1 Bulan','Rp13.000')">Order</button>
+    </div>
+    <div class="product-item">
+      <span>Mixplan 1 Bulan</span>
+      <span class="price">Rp17.000</span>
+      <button class="order-btn"
+        onclick="orderWA('YouTube Premium','Mixplan 1 Bulan','Rp17.000')">Order</button>
+    </div>
+  </details>
+
+  <!-- CHATGPT -->
+  <details>
+    <summary>🤖 ChatGPT</summary>
+    <div class="product-item">
+      <span>1 Bulan</span>
+      <span class="price">Rp28.000</span>
+      <button class="order-btn"
+        onclick="orderWA('ChatGPT Premium','1 Bulan','Rp28.000')">Order</button>
+  </details>
+
+  <!-- GEMINI -->
+  <details>
+    <summary>🤖 Gemini</summary>
+    <div class="product-item">
+      <span>1 Bulan</span>
+      <span class="price">Rp18.000</span>
+      <button class="order-btn"
+        onclick="orderWA('Gemini','1 Bulan','Rp18.000')">Order</button>
+  </details>
+
+  <!-- TOPUP GAME -->
+  <details>
+    <summary>🎮 Topup Game</summary>
+
+    <div>
+      <span class="game-btn" onclick="showGame('ml')">Mobile Legends</span>
+      <span class="game-btn" onclick="showGame('ff')">Free Fire</span>
+      <span class="game-btn" onclick="showGame('pubg')">PUBG</span>
+      <span class="game-btn" onclick="showGame('roblox')">Roblox</span>
+    </div>
+
+    <!-- MOBILE LEGENDS -->
+    <div id="ml" class="hidden">
+  <ul>
+    <h4>🛡️ Garansi & Ketentuan</h4>
+    <li>❗ Pastikan data benar</li>
+    <li>⚡ Proses 1–10 menit</li>
+    <li>♻️ Replace jika gagal</li>
+    <li>🚫 No refund jika data salah</li>
+  </ul>
+
+      <input id="ml_id" placeholder="User ID">
+      <input id="ml_server" placeholder="Server ID">
+
+      <div class="product-item">
+        <span>5 Diamond</span>
+        <span class="price">Rp1.800</span>
+        <button class="order-btn"
+          onclick="orderTopup('Mobile Legends','5 Diamond','Rp1.800','ml')">Order</button>
+      </div>
+      <div class="product-item">
+        <span>12 (11+1) DM</span>
+        <span class="price">Rp3.700</span>
+        <button class="order-btn"
+          onclick="orderTopup('Mobile Legends','12 Diamond','Rp3.700','ml')">Order</button>
+      </div>
+      <div class="product-item">
+        <span>28 (25+3) DM</span>
+        <span class="price">Rp8.210</span>
+        <button class="order-btn"
+          onclick="orderTopup('Mobile Legends','28 Diamond','Rp8.210','ml')">Order</button>
+      </div>
+      <div class="product-item">
+        <span>36 (33+3) DM</span>
+        <span class="price">Rp10.370</span>
+        <button class="order-btn"
+          onclick="orderTopup('Mobile Legends','36 Diamond','Rp10.470','ml')">Order</button>
+      </div>
+      <div class="product-item">
+        <span>44 (40+4) DM</span>
+        <span class="price">Rp12.370</span>
+        <button class="order-btn"
+          onclick="orderTopup('Mobile Legends','44 Diamond','Rp12.370','ml')">Order</button>
+      </div>
+      <div class="product-item">
+        <span>74 (69+5) DM</span>
+        <span class="price">Rp20.500</span>
+        <button class="order-btn"
+          onclick="orderTopup('Mobile Legends','74 Diamond','Rp20.500','ml')">Order</button>
+      </div>
+      <div class="product-item">
+        <span>100 Diamond</span>
+        <span class="price">Rp28.170</span>
+        <button class="order-btn"
+          onclick="orderTopup('Mobile Legends','100 Diamond','Rp28.170','ml')">Order</button>
+      </div>
+      <div class="product-item">
+        <span>172 (156+16) DM</span>
+        <span class="price">Rp48.000</span>
+        <button class="order-btn"
+          onclick="orderTopup('Mobile Legends','172 Diamond','Rp48.000','ml')">Order</button>
+      </div>
+      <div class="product-item">
+        <span>1X Weekly dm pass 220(80+20/hari)</span>
+        <span class="price">Rp31.000</span>
+        <button class="order-btn"
+          onclick="orderTopup('Mobile Legends','1X Weekly dm pass 220','Rp31.000','ml')">Order</button>
+      </div>
+      <div class="product-item">
+        <span>2X Weekly dm pass 440(80+20/hari)</span>
+        <span class="price">Rp58.000</span>
+        <button class="order-btn"
+          onclick="orderTopup('Mobile Legends','1X Weekly dm pass 220','Rp58.000','ml')">Order</button>
+      </div>
+      <div class="product-item">
+       <span>Twilight Pass</span>
+        <button class="order-btn" onclick="comingSoon('Twilight pass')">Soon</button>
+      </div>
+
+    </div>
+
+    <!-- FREE FIRE -->
+    <div id="ff" class="hidden">
+  <ul>
+    <h4>🛡️ Garansi & Ketentuan</h4>
+    <li>❗ Pastikan data benar</li>
+    <li>⚡ Proses 1–10 menit</li>
+    <li>♻️ Replace jika gagal</li>
+    <li>🚫 No refund jika data salah</li>
+  </ul>
+      <input id="ff_id" placeholder="Player ID">
+
+      <div class="product-item">
+        <span>5 Diamond</span>
+        <span class="price">Rp1.000</span>
+        <button class="order-btn"
+          onclick="orderTopup('Free Fire','5 Diamond','Rp1.000','ff')">Order</button>
+      </div>
+      <div class="product-item">
+        <span>15 Diamond</span>
+        <span class="price">Rp2.850</span>
+        <button class="order-btn"
+          onclick="orderTopup('Free Fire','15 Diamond','Rp2.850','ff')">Order</button>
+      </div>
+      <div class="product-item">
+        <span>20 Diamond</span>
+        <span class="price">Rp3.500</span>
+        <button class="order-btn"
+          onclick="orderTopup('Free Fire','20 Diamond','Rp3.500','ff')">Order</button>
+      </div>
+      <div class="product-item">
+        <span>Booyah Pass Card (BP Card)</span>
+        <span class="price">Rp44.000</span>
+        <button class="order-btn"
+          onclick="orderTopup('Free Fire','Booyah Pass Card','Rp44.000','ff')">Order</button>
+      </div>
+      <div class="product-item">
+        <span>Membership Bulanan 50 DM</span>
+        <span class="price">Rp88.000</span>
+        <button class="order-btn"
+          onclick="orderTopup('Free Fire','Membership Bulanan 50 DM','Rp88.000','ff')">Order</button>
+      </div>
+      <div class="product-item">
+        <span>Membership Mingguan 50 DM</span>
+        <span class="price">Rp29.000</span>
+        <button class="order-btn"
+          onclick="orderTopup('Free Fire','Membership Mingguan 50 DM','Rp29.000','ff')">Order</button>
+      </div>
+      <div class="product-item">
+        <span>100 Diamond</span>
+        <span class="price">Rp15.030</span>
+        <button class="order-btn"
+          onclick="orderTopup('Free Fire','100 Diamond','Rp15.030','ff')">Order</button>
+      </div>
+      <div class="product-item">
+        <span>120 Diamond</span>
+        <span class="price">Rp21.500</span>
+        <button class="order-btn"
+          onclick="orderTopup('Free Fire','70 Diamond','Rp10.000','ff')">Order</button>
+      </div>
+      <div class="product-item">
+        <span>200 Diamond</span>
+        <span class="price">Rp28.000</span>
+        <button class="order-btn"
+          onclick="orderTopup('Free Fire','200 Diamond','Rp28.000','ff')">Order</button>
+      </div>
+      <div class="product-item">
+        <span>260 Diamond</span>
+        <span class="price">Rp36.000</span>
+        <button class="order-btn"
+          onclick="orderTopup('Free Fire','260 Diamond','Rp36.000','ff')">Order</button>
+      </div>
+      <div class="product-item">
+        <span>300 Diamond</span>
+        <span class="price">Rp42.000</span>
+        <button class="order-btn"
+          onclick="orderTopup('Free Fire','300 Diamond','Rp42.000','ff')">Order</button>
+      </div>
+      <div class="product-item">
+        <span>355 Diamond</span>
+        <span class="price">Rp48.000</span>
+        <button class="order-btn"
+          onclick="orderTopup('Free Fire','355 Diamond','Rp48.000','ff')">Order</button>
+      </div>
+      <div class="product-item">
+        <span>375 Diamond</span>
+        <span class="price">Rp52.000</span>
+        <button class="order-btn"
+          onclick="orderTopup('Free Fire','375 Diamond','Rp52.000','ff')">Order</button>
+      </div>
+    </div>
+
+    <!-- PUBG -->
+    <div id="pubg" class="hidden">
+  <ul>
+    <h4>🛡️ Garansi & Ketentuan</h4>
+    <li>❗ Pastikan data benar</li>
+    <li>⚡ Proses 1–10 menit</li>
+    <li>♻️ Replace jika gagal</li>
+    <li>🚫 No refund jika data salah</li>
+  </ul>
+      <input id="pubg_id" placeholder="Player ID">
+
+      <div class="product-item">
+        <span>60 UC</span>
+        <span class="price">Rp16.000</span>
+        <button class="order-btn"
+          onclick="orderTopup('PUBG','60 UC','Rp16.000','pubg')">Order</button>
+      </div>
+      <div class="product-item">
+        <span>120 UC</span>
+        <span class="price">Rp30.000</span>
+        <button class="order-btn"
+          onclick="orderTopup('PUBG','120 UC','Rp30.000','pubg')">Order</button>
+      </div>
+      <div class="product-item">
+        <span>180 UC</span>
+        <span class="price">Rp46.000</span>
+        <button class="order-btn"
+          onclick="orderTopup('PUBG','180 UC','Rp46.000','pubg')">Order</button>
+      </div>
+      <div class="product-item">
+        <span>325 UC</span>
+        <span class="price">Rp78.000</span>
+        <button class="order-btn"
+          onclick="orderTopup('PUBG','325 UC','Rp78.000','pubg')">Order</button>
+      </div>
+      <div class="product-item">
+        <span>660 UC</span>
+        <span class="price">Rp159.000</span>
+        <button class="order-btn"
+          onclick="orderTopup('PUBG','660 UC','Rp159.000','pubg')">Order</button>
+      </div>
+    </div>
+
+    <!-- ROBLOX -->
+    <div id="roblox" class="hidden">
+  <ul>
+    <h4>🛡️ Garansi & Ketentuan</h4>
+    <li>❗ Pastikan data benar</li>
+    <li>⚡ Proses 1–10 menit</li>
+    <li>♻️ Replace jika gagal</li>
+    <li>🚫 No refund jika data salah</li>
+  </ul>
+      <input id="roblox_id" placeholder="Username Roblox">
+
+      <div class="product-item">
+        <span>400 Robux</span>
+        <span class="price">Rp65.000</span>
+        <button class="order-btn"
+          onclick="orderTopup('Roblox','400 Robux','Rp65.000','roblox')">Order</button>
+      </div>
+    </div>
+
+  </details>
+
+  <!-- SUNTIK SOSMED -->
+<details>
+  <summary>📱 Suntik Sosmed</summary>
+
+  <!-- PILIH PLATFORM -->
+  <div>
+    <span class="game-btn" onclick="showSosmed('tiktok')">TikTok</span>
+    <span class="game-btn" onclick="showSosmed('instagram')">Instagram</span>
+    <span class="game-btn" onclick="comingSoon('Facebook')">Facebook</span>
+    <span class="game-btn" onclick="comingSoon('Twitter')">Twitter</span>
+    <span class="game-btn" onclick="comingSoon('YouTube')">YouTube</span>
+    <span class="game-btn" onclick="comingSoon('WhatsApp')">WhatsApp</span>
+  </div>
+
+  <!-- TIKTOK -->
+  <div id="tiktok" class="hidden">
+    <h4>TIKTOK</h4>
+
+  <ul>
+    <h4>🛡️ Garansi & Ketentuan</h4>
+    <li>❗ Pastikan data benar</li>
+    <li>⚡ Proses 1–10 menit</li>
+    <li>♻️ Replace jika gagal</li>
+    <li>🚫 No refund jika data salah</li>
+  </ul>
+
+    <div>
+      <span class="game-btn" onclick="showSosmedType('tiktok','followers')">Followers</span>
+      <span class="game-btn" onclick="showSosmedType('tiktok','likes')">Likes</span>
+      <span class="game-btn" onclick="showSosmedType('tiktok','views')">Views</span>
+    </div>
+
+    <!-- FOLLOWERS -->
+    <div id="tiktok-followers" class="hidden">
+      <input id="tiktok_followers_link" placeholder="Link / Username TikTok">
+
+      <div class="product-item">
+        <span>100 Followers</span>
+        <span class="price">Rp5.500</span>
+        <button class="order-btn"
+          onclick="orderSosmed('Tiktok','Followers','100','Rp5.500','tiktok_followers_link')">
+          Order
+        </button>
+      </div>
+
+      <div class="product-item">
+        <span>200 Followers</span>
+        <span class="price">Rp10.000</span>
+        <button class="order-btn"
+          onclick="orderSosmed('Tiktok','Followers','200','Rp10.000','tiktok_followers_link')">
+          Order
+        </button>
+      </div>
+      <div class="product-item">
+        <span>300 Followers</span>
+        <span class="price">Rp13.000</span>
+        <button class="order-btn"
+          onclick="orderSosmed('Tiktok','Followers','300','Rp13.000','tiktok_followers_link')">
+          Order
+        </button>
+      </div>
+      <div class="product-item">
+        <span>400 Followers</span>
+        <span class="price">Rp16.000</span>
+        <button class="order-btn"
+          onclick="orderSosmed('Tiktok','Followers','400','Rp16.000','tiktok_followers_link')">
+          Order
+        </button>
+      </div>
+      <div class="product-item">
+        <span>500 Followers</span>
+        <span class="price">Rp18.000</span>
+        <button class="order-btn"
+          onclick="orderSosmed('Tiktok','Followers','500','Rp18.500','tiktok_followers_link')">
+          Order
+        </button>
+      </div>
+      <div class="product-item">
+        <span>600 Followers</span>
+        <span class="price">Rp21.500</span>
+        <button class="order-btn"
+          onclick="orderSosmed('Tiktok','Followers','600','Rp21.500','tiktok_followers_link')">
+          Order
+        </button>
+      </div>
+      <div class="product-item">
+        <span>700 Followers</span>
+        <span class="price">Rp24.500</span>
+        <button class="order-btn"
+          onclick="orderSosmed('Tiktok','Followers','700','Rp24.500','tiktok_followers_link')">
+          Order
+        </button>
+      </div>
+      <div class="product-item">
+        <span>800 Followers</span>
+        <span class="price">Rp27.000</span>
+        <button class="order-btn"
+          onclick="orderSosmed('Tiktok','Followers','800','Rp27.000','tiktok_followers_link')">
+          Order
+        </button>
+      </div>
+      <div class="product-item">
+        <span>900 Followers</span>
+        <span class="price">Rp30.000</span>
+        <button class="order-btn"
+          onclick="orderSosmed('Tiktok','Followers','900','Rp30.000','tiktok_followers_link')">
+          Order
+        </button>
+      </div>
+      <div class="product-item">
+        <span>1000 Followers</span>
+        <span class="price">Rp32.000</span>
+        <button class="order-btn"
+          onclick="orderSosmed('Tiktok','Followers','1000','Rp32.000','tiktok_followers_link')">
+          Order
+        </button>
+      </div>
+      <div class="product-item">
+        <span>2000 Followers</span>
+        <span class="price">Rp62.000</span>
+        <button class="order-btn"
+          onclick="orderSosmed('Tiktok','Followers','2000','Rp62.000','tiktok_followers_link')">
+          Order
+        </button>
+      </div>
+    <li>Mulai proses 1-10 menit</li>
+<li>Kualitas views akun global</li>
+<li>Tidak ada garansi jika drop</li>
+
+</li>Kecepatan proses dapat berubah jika TikTok update</li>
+<li>Akun TikTok wajib publik</li>
+<li>Jangan lakukan pesanan kedua pada target yang sama jika pesanan pertama belum selesai dalam sistem</li>
+    </div>
+
+    <!-- LIKES -->
+    <div id="tiktok-likes" class="hidden">
+      <input id="tiktok_likes_link" placeholder="Link Video TikTok">
+
+      <div class="product-item">
+        <span>200 Likes</span>
+        <span class="price">Rp1.500</span>
+        <button class="order-btn"
+          onclick="orderSosmed('TikTok','Likes','200','Rp1.500','tiktok_likes_link')">
+          Order
+        </button>
+      </div>
+      <div class="product-item">
+        <span>300 Likes</span>
+        <span class="price">Rp2.000</span>
+        <button class="order-btn"
+          onclick="orderSosmed('TikTok','Likes','300','Rp2.000','tiktok_likes_link')">
+          Order
+        </button>
+      </div>
+      <div class="product-item">
+        <span>400 Likes</span>
+        <span class="price">Rp2.500</span>
+        <button class="order-btn"
+          onclick="orderSosmed('TikTok','Likes','400','Rp2.500','tiktok_likes_link')">
+          Order
+        </button>
+      </div>
+      <div class="product-item">
+        <span>500 Likes</span>
+        <span class="price">Rp3.000</span>
+        <button class="order-btn"
+          onclick="orderSosmed('TikTok','Likes','500','Rp8.000','tiktok_likes_link')">
+          Order
+        </button>
+      </div>
+      <div class="product-item">
+        <span>1000 Likes</span>
+        <span class="price">Rp5.000</span>
+        <button class="order-btn"
+          onclick="orderSosmed('TikTok','Likes','1000','Rp5.000','tiktok_likes_link')">
+          Order
+        </button>
+      </div>
+      <div class="product-item">
+        <span>5000 Likes</span>
+        <span class="price">Rp14.500</span>
+        <button class="order-btn"
+          onclick="orderSosmed('TikTok','Likes','5000','Rp8.000','tiktok_likes_link')">
+          Order
+        </button>
+      </div>
+      <div class="product-item">
+        <span>10000 Likes</span>
+        <span class="price">Rp25.500</span>
+        <button class="order-btn"
+          onclick="orderSosmed('TikTok','Likes','10000','Rp25.500','tiktok_likes_link')">
+          Order
+        </button>
+      </div>
+    <li>Mulai proses 1-10 menit</li>
+<li>Kualitas views akun global</li>
+<li>Tidak ada garansi jika drop</li>
+
+</li>Kecepatan proses dapat berubah jika TikTok update</li>
+<li>Akun TikTok wajib publik</li>
+<li>Jangan lakukan pesanan kedua pada target yang sama jika pesanan pertama belum selesai dalam sistem</li>
+    </div>
+
+    <!-- VIEWS -->
+    <div id="tiktok-views" class="hidden">
+      <input id="tiktok_views_link" placeholder="Link Video TikTok">
+
+      <div class="product-item">
+        <span>10.000 Views</span>
+        <span class="price">Rp3.500</span>
+        <button class="order-btn"
+          onclick="orderSosmed('TikTok','Views','10000','Rp3.500','tiktok_views_link')">
+          Order
+        </button>
+      </div>
+      <div class="product-item">
+        <span>30.000 Views</span>
+        <span class="price">Rp10.000</span>
+        <button class="order-btn"
+          onclick="orderSosmed('TikTok','Views','30000','Rp10.000','tiktok_views_link')">
+          Order
+        </button>
+      </div>
+      <div class="product-item">
+        <span>50.000 Views</span>
+        <span class="price">Rp13.000</span>
+        <button class="order-btn"
+          onclick="orderSosmed('TikTok','Views','50000','Rp13.000','tiktok_views_link')">
+          Order
+        </button>
+      </div>
+      <div class="product-item">
+        <span>70.000 Views</span>
+        <span class="price">Rp17.000</span>
+        <button class="order-btn"
+          onclick="orderSosmed('TikTok','Views','70000','Rp17.000','tiktok_views_link')">
+          Order
+        </button>
+      </div>
+      <div class="product-item">
+        <span>100.000 Views</span>
+        <span class="price">Rp21.000</span>
+        <button class="order-btn"
+          onclick="orderSosmed('TikTok','Views','100000','Rp21.000','tiktok_views_link')">
+          Order
+        </button>
+      </div>
+      <div class="product-item">
+        <span>500.000 Views</span>
+        <span class="price">Rp90.000</span>
+        <button class="order-btn"
+          onclick="orderSosmed('TikTok','Views','500000','Rp90.000','tiktok_views_link')">
+          Order
+        </button>
+      </div>
+    <li>Mulai proses 1-10 menit</li>
+<li>Kualitas views akun global</li>
+<li>Tidak ada garansi jika drop</li>
+
+</li>Kecepatan proses dapat berubah jika TikTok update</li>
+<li>Akun TikTok wajib publik</li>
+<li>Jangan lakukan pesanan kedua pada target yang sama jika pesanan pertama belum selesai dalam sistem</li>
+    </div>
+  </div>
+
+  <!-- INSTAGRAM -->
+  <div id="instagram" class="hidden">
+    <h4>INSTAGRAM</h4>
+  <ul>
+    <h4>🛡️ Garansi & Ketentuan</h4>
+    <li>❗ Pastikan data benar</li>
+    <li>⚡ Proses 1–10 menit</li>
+    <li>♻️ Replace jika gagal</li>
+    <li>🚫 No refund jika data salah</li>
+    <li>Wajib matikan fitur "Laporkan Untuk Ditinjau" di akun Instagram target</li>
+  </ul>
+    <div>
+      <span class="game-btn" onclick="showSosmedType('instagram','followers')">Followers</span>
+      <span class="game-btn" onclick="showSosmedType('instagram','likes')">Likes</span>
+      <span class="game-btn" onclick="showSosmedType('instagram','views')">Views</span>
+    </div>
+
+    <!-- FOLLOWERS -->
+    <div id="instagram-followers" class="hidden">
+      <input id="instagram_followers_link" placeholder="Link / Username TikTok">
+
+      <div class="product-item">
+        <span>100 Followers</span>
+        <span class="price">Rp7.000</span>
+        <button class="order-btn"
+          onclick="orderSosmed('Instagram','Followers','100','Rp7.000','instagram_followers_link')">
+          Order
+        </button>
+      </div>
+
+      <div class="product-item">
+        <span>200 Followers</span>
+        <span class="price">Rp12.000</span>
+        <button class="order-btn"
+          onclick="orderSosmed('Instagram','Followers','200','Rp12.000','instagram_followers_link')">
+          Order
+        </button>
+      </div>
+      <div class="product-item">
+        <span>300 Followers</span>
+        <span class="price">Rp16.000</span>
+        <button class="order-btn"
+          onclick="orderSosmed('Instagram','Followers','300','Rp16.000','instagram_followers_link')">
+          Order
+        </button>
+      </div>
+      <div class="product-item">
+        <span>400 Followers</span>
+        <span class="price">Rp20.000</span>
+        <button class="order-btn"
+          onclick="orderSosmed('Instagram','Followers','400','Rp20.000','instagram_followers_link')">
+          Order
+        </button>
+      </div>
+      <div class="product-item">
+        <span>500 Followers</span>
+        <span class="price">Rp24.000</span>
+        <button class="order-btn"
+          onclick="orderSosmed('Instagram','Followers','500','Rp24.000','instagram_followers_link')">
+          Order
+        </button>
+      </div>
+      <div class="product-item">
+        <span>1000 Followers</span>
+        <span class="price">Rp45.000</span>
+        <button class="order-btn"
+          onclick="orderSosmed('Instagram','Followers','1000','Rp45.000','instagram_followers_link')">
+          Order
+        </button>
+      </div>
+      <div class="product-item">
+        <span>2000 Followers</span>
+        <span class="price">Rp85.000</span>
+        <button class="order-btn"
+          onclick="orderSosmed('Instagram','Followers','2000','Rp85.000','instagram_followers_link')">
+          Order
+        </button>
+      </div>
+      <div class="product-item">
+        <span>3000 Followers</span>
+        <span class="price">Rp125.000</span>
+        <button class="order-btn"
+          onclick="orderSosmed('Instagram','Followers','3000','Rp125.000','instagram_followers_link')">
+          Order
+        </button>
+      </div>
+      <div class="product-item">
+        <span>5000 Followers</span>
+        <span class="price">Rp200.000</span>
+        <button class="order-btn"
+          onclick="orderSosmed('Instagram','Followers','5000','Rp200.000','instagram_followers_link')">
+          Order
+        </button>
+</div>
+    <li>Mulai proses 1-10 menit</li>
+<li>Kualitas views akun global</li>
+<li>Tidak ada garansi jika drop</li>
+
+</li>Kecepatan proses dapat berubah jika Instagram update</li>
+<li>Akun Instagram wajib publik</li>
+<li>Jangan lakukan pesanan kedua pada target yang sama jika pesanan pertama belum selesai dalam sistem</li>
+    </div>
+
+    <!-- LIKES -->
+    <div id="instagram-likes" class="hidden">
+      <input id="instagram_likes_link" placeholder="Link Video Instagram">
+
+      <div class="product-item">
+        <span>300 Likes</span>
+        <span class="price">Rp4.000</span>
+        <button class="order-btn"
+          onclick="orderSosmed('Instagram','Likes','300','Rp4.000','instagram_likes_link')">
+          Order
+        </button>
+      </div>
+      <div class="product-item">
+        <span>500 Likes</span>
+        <span class="price">Rp6.000</span>
+        <button class="order-btn"
+          onclick="orderSosmed('Instagram','Likes','500','Rp6.000','instagram_likes_link')">
+          Order
+        </button>
+      </div>
+      <div class="product-item">
+        <span>1000 Likes</span>
+        <span class="price">Rp8.000</span>
+        <button class="order-btn"
+          onclick="orderSosmed('Instagram','Likes','1000','Rp8.000','instagram_likes_link')">
+          Order
+        </button>
+      </div>
+      <div class="product-item">
+        <span>5000 Likes</span>
+        <span class="price">Rp21.000</span>
+        <button class="order-btn"
+          onclick="orderSosmed('Instagram','Likes','5000','Rp21.000','instagram_likes_link')">
+          Order
+        </button>
+      </div>
+      <div class="product-item">
+        <span>10000 Likes</span>
+        <span class="price">Rp40.000</span>
+        <button class="order-btn"
+          onclick="orderSosmed('Instagram','Likes','10000','Rp40.000','instagram_likes_link')">
+          Order
+        </button>
+      </div>
+    <li>Mulai proses 1-10 menit</li>
+
+</li>Kecepatan proses dapat berubah jika Instagram update</li>
+<li>Akun Instagram wajib publik</li>
+<li>Jangan lakukan pesanan kedua pada target yang sama jika pesanan pertama belum selesai dalam sistem</li>
+    </div>
+
+    <!-- VIEWS -->
+    <div id="instagram-views" class="hidden">
+      <input id="instagram_views_link" placeholder="Link Video Instagram">
+
+      <div class="product-item">
+        <span>5.000 Views</span>
+        <span class="price">Rp2.000</span>
+        <button class="order-btn"
+          onclick="orderSosmed('Instagram','Views','5000','Rp2.000','instagram_views_link')">
+          Order
+        </button>
+      </div>
+      <div class="product-item">
+        <span>10.000 Views</span>
+        <span class="price">Rp3.000</span>
+        <button class="order-btn"
+          onclick="orderSosmed('Instagram','Views','10000','Rp3.000','instagram_views_link')">
+          Order
+        </button>
+      </div>
+      <div class="product-item">
+        <span>15.000 Views</span>
+        <span class="price">Rp5.000</span>
+        <button class="order-btn"
+          onclick="orderSosmed('Instagram','Views','15000','Rp5.000','instagram_views_link')">
+          Order
+        </button>
+      </div>
+      <div class="product-item">
+        <span>25.000 Views</span>
+        <span class="price">Rp7.000</span>
+        <button class="order-btn"
+          onclick="orderSosmed('Instagram','Views','25000','Rp7.000','instagram_views_link')">
+          Order
+        </button>
+      </div>
+      <div class="product-item">
+        <span>50.000 Views</span>
+        <span class="price">Rp13.000</span>
+        <button class="order-btn"
+          onclick="orderSosmed('Instagram','Views','50000','Rp13.000','instagram_views_link')">
+          Order
+        </button>
+      </div>
+    <li>Mulai proses 1-10 menit</li>
+<li>Kualitas views akun global</li>
+<li>Tidak ada garansi jika drop</li>
+
+</li>Kecepatan proses dapat berubah jika Instagram update</li>
+<li>Akun Instagram wajib publik</li>
+<li>Jangan lakukan pesanan kedua pada target yang sama jika pesanan pertama belum selesai dalam sistem</li>
+    </div>
+  </div>
+
+</details>
+<div id="help-box" class="help-box hidden">
+  <div class="help-header">
+    <span>📖 Pengertian</span>
+    <button onclick="toggleHelp()">✕</button>
+  </div>
+  <div class="help-content">
+    <p><b>Famplan</b> Family Plan (Paket Keluarga) - adalah paket langganan yang dirancang untuk keluarga, biasanya memungkinkan beberapa pengguna (biasanya 4-6 orang) untuk berbagi akun dan menikmati fitur premium dengan harga yang lebih murah daripada membeli paket individu.
+    <p><b>Indplan</b> Individual Plan (Paket Individu) - adalah paket langganan yang dirancang untuk satu pengguna saja, biasanya dengan harga yang lebih murah daripada paket keluarga.</p>
+    <p><b>Suntik Sosmed</b> adalah layanan followers, likes, views otomatis.</p>
+    <p><b>1P1U</b>
+1 PROFILE 1 USER 1 DEVICE
+Hanya dapat log-in 1 device dengan 1 profile yang berisikan dirimu saja.
+    <p><b>1P2U</b>
+1 PROFILE 2 USER 1 DEVICE
+Hanya bisa log-in di 1 device dengan 1 profile yang berisikan 2 orang; kamu dan customer lain.
+    <p><b>SEMI PRIVATE</b>
+1 PROFILE 2 DEVICE
+Bisa log-in di 2 device berbeda dengan 1 profile yang berisikan dirimu saja. Semi private hanya log-in 2 device. Tidak boleh nonton secara bersamaan. 
+    <p><b>PRIVATE</b>
+5 PROFILE
+Mendapatkan 5 profile yang dapat diakses bebas selama masa durasi, bisa digunakan secara pribadi maupun diperjualbelikan secara sharing 1P1U, 1P2U, ataupun semi private. 
+    <p><b>EXTRAMEMBER</b>
+SINGLE SCREEN
+Akun yang berisikan dirimu saja, hanya ada 1 profile. Bisa log-in di device mana pun. Limit screen 1 device. Bisa log-in 1-2 device. Anti limit & bebas household. Bisa request password. 
+    <p><b>⚠️ NOTE:</b>
+• Netflix private bisa ganti password. Wajib update new password ya.
+• Netflix menetapkan batas streaming secara bersamaan adalah 4 user, jika kamu terkena limit screen bisa ditunggu 15-30 menit atau di download saja filmnya terlebih dahulu. 
+• Tidak ada garansi ganti akun atau apapun itu untuk permasalahan limit screen, karena itu sudah kebijakan dari netflix. 
+• Durasi 25-30 hari sudah terhitung sebagai 1 bulan untuk akun sharing.
+• Durasi 28-30 hari sudah terhitung sebagai 1 bulan untuk akun private.
+</p>
+  </div>
+</div>
+
+
+</section>
+<script>
+
+const fakeOrders = [
+  "Raf** baru saja membeli Canva",
+  "Ama*** baru saja membeli Netflix",
+  "Has** baru saja membeli Followers IG",
+  "Dis** baru saja TopUp MobileLegends",
+  "Sal** baru saja membeli Spotify",
+  "agu** baru saja TopUp Free Fire",
+  "ris** baru saja membeli Like TikTok",
+  "az*** baru saja TopUp Free Fire",
+  "ind** baru saja membeli YouTube"
+];
+
+setInterval(()=>{
+  const box = document.getElementById('live-order');
+  box.textContent = "🔔 " + fakeOrders[Math.floor(Math.random()*fakeOrders.length)];
+  box.classList.remove('hidden');
+
+  setTimeout(()=> box.classList.add('hidden'), 6000);
+}, 16000);
+
+document.querySelectorAll("details").forEach((detail) => {
+  detail.addEventListener("toggle", () => {
+    if (detail.open) {
+      document.querySelectorAll("details").forEach((other) => {
+        if (other !== detail) other.removeAttribute("open");
+      });
+    }
+  });
+});
+
+const phone = '6283844641151';
+
+function orderWA(product, duration, price) {
+  const msg = `Halo Kak, saya mau order ${product} - ${duration} (${price})`;
+  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+function showGame(game) {
+  ['ml','ff','pubg','roblox'].forEach(id=>{
+    document.getElementById(id).classList.add('hidden');
+  });
+  document.getElementById(game).classList.remove('hidden');
+}
+
+function orderTopup(game, paket, harga, type) {
+  let id = '';
+
+  if (type === 'ml') {
+    const uid = document.getElementById('ml_id').value.trim();
+    const server = document.getElementById('ml_server').value.trim();
+    if (!uid || !server) {
+      alert('User ID dan Server wajib diisi!');
+      return;
+    }
+    id = `${uid} (${server})`;
+  }
+
+  if (type === 'ff') {
+    id = document.getElementById('ff_id').value.trim();
+    if (!id) {
+      alert('Player ID wajib diisi!');
+      return;
+    }
+  }
+
+  if (type === 'pubg') {
+    id = document.getElementById('pubg_id').value.trim();
+    if (!id) {
+      alert('Player ID wajib diisi!');
+      return;
+    }
+  }
+
+  if (type === 'roblox') {
+    id = document.getElementById('roblox_id').value.trim();
+    if (!id) {
+      alert('Username Roblox wajib diisi!');
+      return;
+    }
+  }
+
+  const phone = '6283844641151';
+  const msg = `Halo Kak 👋
+Saya mau TOPUP
+
+Game   : ${game}
+Paket  : ${paket}
+Harga  : ${harga}
+ID     : ${id}
+
+Terima kasih 🙏`;
+
+  window.open(
+    `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`,
+    '_blank'
+  );
+}
+
+function showSosmed(platform){
+  ['tiktok','instagram','facebook','youtube']
+    .forEach(id=>{
+      const el = document.getElementById(id);
+      if(el) el.classList.add('hidden');
+    });
+  document.getElementById(platform).classList.remove('hidden');
+}
+
+function showSosmedType(platform,type){
+  ['followers','likes','views'].forEach(t=>{
+    const el = document.getElementById(`${platform}-${t}`);
+    if(el) el.classList.add('hidden');
+  });
+  document.getElementById(`${platform}-${type}`).classList.remove('hidden');
+}
+
+function orderSosmed(platform, jenis, jumlah, harga, inputId){
+  const target = document.getElementById(inputId).value.trim();
+  if(!target){
+    alert('Link / Username wajib diisi!');
+    return;
+  }
+
+  const phone = '6283844641151';
+  const msg = `Halo Kak 👋
+Saya mau SUNTIK SOSMED
+
+Platform : ${platform}
+Jenis    : ${jenis}
+Jumlah   : ${jumlah}
+Harga    : ${harga}
+Target   : ${target}`;
+
+  window.open(
+    `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`,
+    '_blank'
+  );
+}
+  function comingSoon(platform){
+    alert(`🚧 ${platform} Coming Soon!\n\nFitur sedang dikembangkan.\nPantau terus ya 🔥`);
+  }
+function toggleFab(){
+  document.querySelector('.fab-container').classList.toggle('active');
+}
+
+function toggleHelp(){
+  document.getElementById('help-box').classList.toggle('hidden');
+}
+
+</script>
+<div class="fab-container">
+  <button class="fab-main" onclick="toggleFab()">＋</button>
+
+  <a href="https://wa.me/6283844641151" target="_blank" class="fab-item fab-wa">
+    💬
+  </a>
+
+  <a href="https://www.instagram.com/rembodigitalstore?igsh=cnE5OGp5ZmZxZjg0" target="_blank" class="fab-item fab-ig">
+    📸
+  </a>
+
+  <button class="fab-item fab-help" onclick="toggleHelp()">
+    ❓
+  </button>
+</div>
+
+</body>
+</html>
